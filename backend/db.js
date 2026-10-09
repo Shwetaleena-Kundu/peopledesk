@@ -5,10 +5,11 @@ require("dotenv").config({
   path: path.join(__dirname, ".env"),
 });
 
-// Pool manages connections between our backend and PostgreSQL.
-// It reads the PG settings from .env.
 const pool = new Pool({
-  connectionTimeoutMillis: 5000,
+  ...(process.env.DATABASE_URL
+    ? { connectionString: process.env.DATABASE_URL }
+    : {}),
+  connectionTimeoutMillis: 15000,
 });
 
 pool.on("error", (error) => {
