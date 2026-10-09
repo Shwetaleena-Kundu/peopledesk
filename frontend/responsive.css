@@ -323,3 +323,42 @@
     font-size: 25px;
   }
 }
+@media (max-width: 600px) {
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    min-width: 0;
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .stat-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    position: static;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+  }
+
+  .stat-card h2 {
+    margin-top: 12px;
+    font-size: 27px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  .stat-description {
+    margin-top: 8px;
+  }
+}
