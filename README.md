@@ -148,12 +148,25 @@ Local and hosted databases are separate; local employee records are not automati
 
 ## Screenshots
 
-Submission screenshots are stored in the `screenshots/` folder once uploaded:
+### Desktop dashboard
 
-- Desktop dashboard
-- Mobile dashboard
-- Add Employee form
-- Form validation error
+![PeopleDesk desktop dashboard](screenshots/peopledesk-desktop.jpeg)
+
+### Mobile dashboard
+
+![PeopleDesk mobile dashboard](screenshots/peopledesk-mobile.jpeg)
+
+### Add Employee form
+
+![PeopleDesk Add Employee form](screenshots/peopledesk-add-employee.jpeg)
+
+### Form validation
+
+![PeopleDesk form validation error](screenshots/peopledesk-validation.png)
+
+## Demo video
+
+[View or download the PeopleDesk demo video](demo/peopledesk-demo.mp4)
 
 ## Verification
 
