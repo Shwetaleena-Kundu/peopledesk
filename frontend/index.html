@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>PeopleDesk | Employee Management</title>
+  <meta
+    name="description"
+    content="Manage employee records with PeopleDesk."
+  >
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Workspace">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">P</span>
+        <span>PeopleDesk<span class="brand-dot">.</span></span>
+      </a>
+
+      <p class="sidebar-label">WORKSPACE</p>
+
+      <nav class="sidebar-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#employees" aria-current="page">
+          <span aria-hidden="true">▦</span>
+          Employees
+        </a>
+      </nav>
+
+      <div class="sidebar-note">
+        <span class="note-icon" aria-hidden="true">✦</span>
+        <h2>Your people, organized.</h2>
+        <p>Keep your team details together in one place.</p>
+      </div>
+
+      <div class="sidebar-profile">
+        <span class="profile-avatar" aria-hidden="true">HR</span>
+        <div>
+          <strong>HR Workspace</strong>
+          <span>Employee management</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <header class="topbar">
+        <p>Workspace <span aria-hidden="true">/</span> Employees</p>
+        <span class="workspace-badge">HR workspace</span>
+      </header>
+
+      <section class="page-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">YOUR TEAM AT A GLANCE</p>
+          <h1 id="page-title">Employee management</h1>
+          <p class="page-description">
+            Manage your people and keep employee records up to date.
+          </p>
+        </div>
+
+        <button class="btn btn-primary" id="addEmployeeBtn" type="button">
+          <span aria-hidden="true">+</span>
+          Add employee
+        </button>
+      </section>
+
+      <!-- Values will be calculated from employee records -->
+      <section class="stats-grid" aria-label="Employee overview">
+        <article class="stat-card">
+          <div class="stat-heading">
+            <p>Total employees</p>
+            <span class="stat-icon purple" aria-hidden="true">◎</span>
+          </div>
+          <h2 id="totalEmployees">—</h2>
+          <p class="stat-description">Employees in your directory</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <p>Departments</p>
+            <span class="stat-icon blue" aria-hidden="true">▦</span>
+          </div>
+          <h2 id="totalDepartments">—</h2>
+          <p class="stat-description">Departments represented</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-heading">
+            <p>Monthly payroll</p>
+            <span class="stat-icon green" aria-hidden="true">₹</span>
+          </div>
+          <h2 id="totalPayroll">—</h2>
+          <p class="stat-description">Combined monthly salaries</p>
+        </article>
+      </section>
+
+      <section
+        class="employee-panel"
+        id="employees"
+        aria-labelledby="directory-title"
+      >
+        <div class="panel-heading">
+          <div>
+            <h2 id="directory-title">Employee directory</h2>
+            <p>A central place for your team's information.</p>
+          </div>
+          <span class="count-badge" id="employeeCount">0 employees</span>
+        </div>
+
+        <div class="table-toolbar">
+          <div class="search-field">
+            <label class="sr-only" for="searchInput">
+              Search by name, department, or role
+            </label>
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="Search by name, department, or role..."
+            >
+          </div>
+
+          <div class="filter-field">
+            <label class="sr-only" for="departmentFilter">
+              Filter by department
+            </label>
+            <select id="departmentFilter">
+              <option value="">All departments</option>
+            </select>
+          </div>
+
+          <div class="sort-field">
+            <label class="sr-only" for="sortSelect">Sort employees</label>
+            <select id="sortSelect">
+              <option value="newest">Recently added</option>
+              <option value="name-asc">Name: A–Z</option>
+              <option value="name-desc">Name: Z–A</option>
+              <option value="salary-asc">Salary: Low to high</option>
+              <option value="salary-desc">Salary: High to low</option>
+              <option value="join-date-desc">Joining date: Newest first</option>
+              <option value="join-date-asc">Joining date: Oldest first</option>
+            </select>
+          </div>
+        </div>
+
+        <p class="table-status" id="tableStatus" role="status"></p>
+
+        <div class="table-wrapper">
+          <table class="employee-table">
+            <caption class="sr-only">
+              Employee records including department, role, monthly salary,
+              joining date, and actions.
+            </caption>
+
+            <thead>
+              <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Department</th>
+                <th scope="col">Role</th>
+                <th scope="col">Monthly salary</th>
+                <th scope="col">Joining date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody id="employeeTableBody">
+              <!-- JavaScript will render employee rows here -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-icon" aria-hidden="true">◎</span>
+          <h3 id="emptyStateTitle">No employees yet</h3>
+          <p id="emptyStateDescription">
+            Add your first employee to start building your directory.
+          </p>
+        </div>
+
+        <div class="panel-footer">
+          <p id="resultsCount">Showing 0 employees</p>
+          <button class="btn btn-secondary" id="resetFiltersBtn" type="button">
+            Reset filters
+          </button>
+        </div>
+      </section>
+
+      <footer class="page-footer">
+        <p>PeopleDesk — Employee Management System</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Shared Add/Edit dialog -->
+  <dialog
+    class="modal employee-modal"
+    id="employeeDialog"
+    aria-labelledby="employeeDialogTitle"
+    aria-describedby="employeeDialogDescription"
+  >
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">EMPLOYEE DETAILS</p>
+        <h2 id="employeeDialogTitle">Add employee</h2>
+        <p id="employeeDialogDescription">
+          Enter the employee's information below.
+        </p>
+      </div>
+
+      <button
+        class="icon-btn"
+        id="closeEmployeeDialogBtn"
+        type="button"
+        aria-label="Close employee form"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <form id="employeeForm">
+      <!-- Empty for Add; filled with the record ID for Edit -->
+      <input type="hidden" id="employeeId" name="id">
+
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label for="employeeName">Full name</label>
+          <input
+            type="text"
+            id="employeeName"
+            name="name"
+            placeholder="e.g. Ananya Sharma"
+            autocomplete="name"
+            minlength="2"
+            maxlength="100"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="employeeDepartment">Department</label>
+          <select
+            id="employeeDepartment"
+            name="department"
+            required
+          >
+            <option value="">Select department</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Design">Design</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Human Resources">Human Resources</option>
+            <option value="Finance">Finance</option>
+            <option value="Sales">Sales</option>
+            <option value="Operations">Operations</option>
+            <option value="Customer Support">Customer Support</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="employeeRole">Job role</label>
+          <input
+            type="text"
+            id="employeeRole"
+            name="role"
+            placeholder="e.g. Frontend Developer"
+            minlength="2"
+            maxlength="100"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="employeeSalary">Monthly salary (₹)</label>
+          <input
+            type="number"
+            id="employeeSalary"
+            name="salary"
+            placeholder="e.g. 30000"
+            min="0"
+            max="10000000"
+            step="0.01"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="employeeJoinDate">Joining date</label>
+          <input
+            type="date"
+            id="employeeJoinDate"
+            name="joinDate"
+            required
+          >
+        </div>
+      </div>
+
+      <p class="form-error" id="formError" role="alert" hidden></p>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelEmployeeBtn" type="button">
+          Cancel
+        </button>
+        <button class="btn btn-primary" id="saveEmployeeBtn" type="submit">
+          Save employee
+        </button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Delete confirmation dialog -->
+  <dialog
+    class="modal delete-modal"
+    id="deleteDialog"
+    aria-labelledby="deleteDialogTitle"
+    aria-describedby="deleteDialogDescription"
+  >
+    <div class="modal-header">
+      <h2 id="deleteDialogTitle">Delete employee?</h2>
+      <button
+        class="icon-btn"
+        id="closeDeleteDialogBtn"
+        type="button"
+        aria-label="Close delete confirmation"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <p id="deleteDialogDescription">
+      This will permanently remove
+      <strong id="deleteEmployeeName">this employee</strong>
+      from the directory.
+    </p>
+
+    <p class="form-error" id="deleteError" role="alert" hidden></p>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary" id="cancelDeleteBtn" type="button">
+        Cancel
+      </button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" type="button">
+        Delete employee
+      </button>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
