@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "PeopleDesk API",
+    "description": "Import into Postman. Start the local backend, then run Create test employee first. Its test saves employeeId for subsequent requests. Other clients may require setting employeeId manually from the POST response. Delete removes that test employee. Expected statuses: GET/PUT/DELETE 200, create 201, negative salary 400. Change baseUrl to https://peopledesk-mmtv.onrender.com to test the hosted demo.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "employeeId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "List employees",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/employees"
+      }
+    },
+    {
+      "name": "Create test employee",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/employees",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Employee\",\n  \"department\": \"Engineering\",\n  \"role\": \"Frontend Developer\",\n  \"salary\": 30000,\n  \"joinDate\": \"2026-08-10\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Employee created', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) pm.collectionVariables.set('employeeId', String(pm.response.json().id));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get test employee",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/employees/{{employeeId}}"
+      }
+    },
+    {
+      "name": "Update test employee",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/employees/{{employeeId}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Employee\",\n  \"department\": \"Engineering\",\n  \"role\": \"Frontend Developer\",\n  \"salary\": 32000,\n  \"joinDate\": \"2026-08-10\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Reject negative salary",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/employees",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Test Employee\",\n  \"department\": \"Engineering\",\n  \"role\": \"Frontend Developer\",\n  \"salary\": -1,\n  \"joinDate\": \"2026-08-10\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Delete test employee",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/employees/{{employeeId}}"
+      }
+    }
+  ]
+}
